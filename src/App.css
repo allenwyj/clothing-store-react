@@ -2,3 +2,9 @@ body {
   font-family: 'Noto Sans';
   padding: 20px 60px;
 }
+
+/* making navi bar's items don't become purple and underscored. */
+a {
+  text-decoration: none;
+  color: black;
+}
