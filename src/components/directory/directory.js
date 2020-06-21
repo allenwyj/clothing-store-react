@@ -1,5 +1,7 @@
 import React from 'react';
+
 import MenuItem from '../menu-item/MenuItem';
+
 import './directory.scss';
 
 class Directory extends React.Component {
@@ -12,7 +14,7 @@ class Directory extends React.Component {
           title: 'hats',
           imageUrl: 'https://i.ibb.co/cvpntL1/hats.png',
           id: 1,
-          linkUrl: 'shop/hats'
+          linkUrl: 'hats'
         },
         {
           title: 'jackets',
@@ -49,8 +51,9 @@ class Directory extends React.Component {
       <div className="directory-menu">
         {
           // destructuring each section and passing them into MenuItem
-          this.state.sections.map(({ title, imageUrl, id, size }) => (
-            <MenuItem title={title} key={id} imageUrl={imageUrl} size={size} />
+          this.state.sections.map(({ id, ...otherSectionProps }) => (
+            // desturcturing and pass the rest fields of section, and use the same name as the field name.
+            <MenuItem key={id} {...otherSectionProps} />
           ))
         }
       </div>
