@@ -1,0 +1,65 @@
+/* scss variable, so we can use them later in the code. */
+$sub-color: grey;
+$main-color: black;
+
+/* @mixin allows to reuse this part of CSS in other classes.
+ * handles the style of the component which user is focusing on.
+ * moving the text up, decreasing the font size and changing the font color.
+*/
+@mixin shrinkLabel {
+  top: -14px;
+  font-size: 12px;
+  color: $main-color;
+}
+
+.group {
+  position: relative;
+  margin: 45px 0;
+
+  .form-input {
+    background: none;
+    background-color: white;
+    color: $sub-color;
+    font-size: 18px;
+    padding: 10px 10px 10px 5px;
+    display: block;
+    width: 100%;
+    border: none;
+    border-radius: 0;
+    border-bottom: 1px solid $sub-color;
+    margin: 25px 0;
+
+    &:focus {
+      outline: none;
+    }
+
+    /* when users focus on  */
+    &:focus ~ .form-input-label {
+      @include shrinkLabel();
+    }
+  }
+
+  /* set the sapce for password */
+  input[type='password'] {
+    letter-spacing: 0.3em;
+  }
+
+  /* handles the style before focusing and after focusing 
+   * form-input-label contains the style before focusing
+   * shrink will overwrite the style after focusing
+  */
+  .form-input-label {
+    color: $sub-color;
+    font-size: 16px;
+    font-weight: normal;
+    position: absolute;
+    pointer-events: none;
+    left: 5px;
+    top: 10px;
+    transition: 300ms ease all;
+
+    &.shrink {
+      @include shrinkLabel();
+    }
+  }
+}
