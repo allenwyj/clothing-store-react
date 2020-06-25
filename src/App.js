@@ -7,7 +7,7 @@ import HomePage from './pages/homepage/HomePage';
 import ShopPage from './pages/shop/ShopPage';
 import Header from './components/header/Header';
 import SignInAndSignUpPage from './pages/sign-in-and-sign-up/SignInAndSignUpPage';
-import { auth } from './firebase/FirebaseUtils';
+import { auth, createUserProfileDocument } from './firebase/FirebaseUtils';
 
 class App extends React.Component {
   constructor() {
@@ -22,11 +22,35 @@ class App extends React.Component {
 
   componentDidMount() {
     // an open connection which monitors if firebase authentication is changed.
-    // if no login current user, user returns null.
+    // if no current login user, user is null.
     // onAuthStateChanged() returns firebase.Unsubscribe()
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(user => {
-      this.setState({ currentUser: user });
-      
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
+      // when there is a current user signin
+      if (userAuth) {
+        // if the current user does not exist in the database, we will create the document.
+        const userRef = await createUserProfileDocument(userAuth);
+
+        userRef.onSnapshot(snapShot => {
+          this.setState(
+            {
+              // create an object that contains all data in the snapshot.
+              currentUser: {
+                id: snapShot.id,
+                ...snapShot.data()
+              }
+            },
+            () => {
+              // check if the snapShot is working
+              console.log(this.state);
+            }
+          );
+        });
+      } else {
+        // when there is no current user, set it back to null
+        this.setState({ currentUser: userAuth }, () => {
+          console.log(this.state);
+        });
+      }
     });
   }
 
