@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import { auth } from '../../firebase/FirebaseUtils';
 
@@ -32,4 +33,14 @@ const Header = ({ currentUser }) => (
   </div>
 );
 
-export default Header;
+/**
+ * A standard function in redux, which deals with returning the redux store's state
+ * @param {Object} state the value will come from the reducer. state is the combinedReducers object
+ * @return {object} returns will be passed into this component
+ */
+const mapStateToProps = state => ({
+  // combinedReducers -> userReducer (the value of the user key) -> currentUser (userReducer returns)
+  currentUser: state.user.currentUser
+});
+
+export default connect(mapStateToProps)(Header);

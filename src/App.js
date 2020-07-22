@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import './App.css';
 
@@ -8,19 +9,15 @@ import ShopPage from './pages/shop/ShopPage';
 import Header from './components/header/Header';
 import SignInAndSignUpPage from './pages/sign-in-and-sign-up/SignInAndSignUpPage';
 import { auth, createUserProfileDocument } from './firebase/FirebaseUtils';
+import { setCurrentUser } from './redux/user/UserAction';
 
 class App extends React.Component {
-  constructor() {
-    super();
-
-    this.state = {
-      currentUser: null
-    };
-  }
-
   unsubscribeFromAuth = null;
 
   componentDidMount() {
+    // getting dispatching actions object
+    const { setCurrentUser } = this.props;
+
     // an open connection which monitors if firebase authentication is changed.
     // if no current login user, user is null.
     // onAuthStateChanged() returns firebase.Unsubscribe()
@@ -31,25 +28,16 @@ class App extends React.Component {
         const userRef = await createUserProfileDocument(userAuth);
 
         userRef.onSnapshot(snapShot => {
-          this.setState(
-            {
-              // create an object that contains all data in the snapshot.
-              currentUser: {
-                id: snapShot.id,
-                ...snapShot.data()
-              }
-            },
-            () => {
-              // check if the snapShot is working
-              console.log(this.state);
-            }
-          );
+          // dispatching user to store state.
+          setCurrentUser({
+            // create an object that contains all data in the snapshot.
+            id: snapShot.id,
+            ...snapShot.data()
+          });
         });
       } else {
         // when there is no current user, set it back to null
-        this.setState({ currentUser: userAuth }, () => {
-          console.log(this.state);
-        });
+        setCurrentUser(userAuth); // we just need to pass our currentUser in.
       }
     });
   }
@@ -63,7 +51,7 @@ class App extends React.Component {
     // putting Header out of the Switch can make Header always is always presented and rendered.
     return (
       <div>
-        <Header currentUser={this.state.currentUser} />
+        <Header />
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route path="/shop" component={ShopPage} />
@@ -74,4 +62,10 @@ class App extends React.Component {
   }
 }
 
-export default App;
+// Dispatch accepts action objects and pass it to every reducer
+const mapDispatchToProps = dispatch => ({
+  // setCurrentUser() returns an Action object, each field is a function
+  setCurrentUser: user => dispatch(setCurrentUser(user))
+});
+
+export default connect(null, mapDispatchToProps)(App);

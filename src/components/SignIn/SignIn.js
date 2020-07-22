@@ -17,6 +17,8 @@ class SignIn extends React.Component {
     };
   }
 
+  // handelChange() gets called in the sub-component
+  // the data from sub-component is passed up.
   handleChange = event => {
     // event fired, then get name and value from input
     const { value, name } = event.target;
@@ -65,7 +67,11 @@ class SignIn extends React.Component {
 
           <div className="buttons">
             <CustomButton type="submit"> Sign In </CustomButton>
-            <CustomButton onClick={signInWithGoogle} isGoogleSignIn>
+            <CustomButton
+              type="button"
+              onClick={signInWithGoogle}
+              isGoogleSignIn
+            >
               Sign in with Google
             </CustomButton>
           </div>
