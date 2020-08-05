@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import { auth } from '../../firebase/FirebaseUtils';
 
 import { ReactComponent as Logo } from '../../assets/crown.svg';
+import CartIcon from '../cart-icon/CartIcon';
+import CartDropdown from '../cart-dropdown/CartDropdown';
 
 import './Header.scss';
 
@@ -29,7 +31,9 @@ const Header = ({ currentUser }) => (
           SIGN IN
         </Link>
       )}
+      <CartIcon />
     </div>
+    {hidden ? null : <CartDropdown />}
   </div>
 );
 
@@ -38,9 +42,10 @@ const Header = ({ currentUser }) => (
  * @param {Object} state the value will come from the reducer. state is the combinedReducers object
  * @return {object} returns will be passed into this component
  */
-const mapStateToProps = state => ({
+const mapStateToProps = ({ user: { currentUser }, cart: { hidden } }) => ({
   // combinedReducers -> userReducer (the value of the user key) -> currentUser (userReducer returns)
-  currentUser: state.user.currentUser
+  currentUser,
+  hidden
 });
 
 export default connect(mapStateToProps)(Header);
