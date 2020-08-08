@@ -1,6 +1,7 @@
 import React from 'react';
 import { ReactComponent as ShoppingIcon } from '../../assets/shopping-bag.svg';
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 
 import { toggleCartHidden } from '../../redux/cart/CartAction';
 import { selectCartItemsCount } from '../../redux/cart/CartSelector';
@@ -23,8 +24,8 @@ const CartIcon = ({ toggleCartHidden, itemCount }) => (
 // });
 
 // updating the number of items in the cart
-const mapStateToProps = state => ({
-  itemCount: selectCartItemsCount(state)
+const mapStateToProps = createStructuredSelector({
+  itemCount: selectCartItemsCount
 });
 
 // Trigger an action to get an action object and using dispatch to find the associated reducer to change store state.

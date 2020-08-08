@@ -1,15 +1,21 @@
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 
 import './App.css';
 
 import HomePage from './pages/homepage/HomePage';
 import ShopPage from './pages/shop/ShopPage';
-import Header from './components/header/Header';
+import CheckoutPage from './pages/checkout/CheckoutPage';
 import SignInAndSignUpPage from './pages/sign-in-and-sign-up/SignInAndSignUpPage';
+
+import Header from './components/header/Header';
+
 import { auth, createUserProfileDocument } from './firebase/FirebaseUtils';
+
 import { setCurrentUser } from './redux/user/UserAction';
+import { selectCurrentUser } from './redux/user/UserSelectors';
 
 class App extends React.Component {
   unsubscribeFromAuth = null;
@@ -55,6 +61,7 @@ class App extends React.Component {
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route path="/shop" component={ShopPage} />
+          <Route exact path="/checkout" component={CheckoutPage} />
           <Route
             exact
             path="/sign-in"
@@ -72,9 +79,13 @@ class App extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  currentUser: state.user.currentUser
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser
 });
+
+// const mapStateToProps = state => ({
+//   currentUser: state.user.currentUser
+// });
 
 // Dispatch accepts action objects and pass it to every reducer
 const mapDispatchToProps = dispatch => ({

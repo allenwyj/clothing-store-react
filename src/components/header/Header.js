@@ -1,12 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 
 import { auth } from '../../firebase/FirebaseUtils';
 
 import { ReactComponent as Logo } from '../../assets/crown.svg';
 import CartIcon from '../cart-icon/CartIcon';
 import CartDropdown from '../cart-dropdown/CartDropdown';
+import { selectCartHidden } from '../../redux/cart/CartSelector';
+import { selectCurrentUser } from '../../redux/user/UserSelectors';
 
 import './Header.scss';
 
@@ -42,10 +45,14 @@ const Header = ({ currentUser, hidden }) => (
  * @param {Object} state the value will come from the reducer. state is the combinedReducers object
  * @return {object} returns will be passed into this component
  */
-const mapStateToProps = ({ user: { currentUser }, cart: { hidden } }) => ({
-  // combinedReducers -> userReducer (the value of the user key) -> currentUser (userReducer returns)
-  currentUser,
-  hidden
-});
+// const mapStateToProps = ({ user: { currentUser }, cart: { hidden } }) => ({
+//   // combinedReducers -> userReducer (the value of the user key) -> currentUser (userReducer returns)
+//   currentUser,
+//   hidden
+// });
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser,
+  hidden: selectCartHidden
+})
 
 export default connect(mapStateToProps)(Header);
