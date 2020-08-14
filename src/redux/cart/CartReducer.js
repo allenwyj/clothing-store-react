@@ -20,6 +20,7 @@ const cartReducer = (state = INITIAL_STATE, action) => {
         // adding the existing items into the array and adding the new items in the following.
         cartItems: addItemToCart(state.cartItems, action.payload)
       };
+    // decreasing the quantity of the cart item by 1
     case CartActionTypes.REMOVE_ITEM:
       return {
         ...state,
@@ -29,7 +30,7 @@ const cartReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         cartItems: state.cartItems.filter(
-          // removing cart item if they have the same id
+          // delete cart item if they have the same id
           cartItem => cartItem.id !== action.payload.id
         )
       };
