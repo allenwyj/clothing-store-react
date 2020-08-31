@@ -23,6 +23,7 @@ class App extends React.Component {
   componentDidMount() {
     // getting dispatching actions object
     const { setCurrentUser } = this.props;
+    //const { setCurrentUser, collectionsArray } = this.props;
 
     // an open connection which monitors if firebase authentication is changed.
     // if no current login user, user is null.
@@ -45,6 +46,13 @@ class App extends React.Component {
         // when there is no current user, set it back to null
         setCurrentUser(userAuth); // we just need to pass our currentUser in.
       }
+
+      // adding collection and documents into the firebase
+      // we only add the values that we want to be stored(title and items)
+      // addCollectionAndDocuments(
+      //   'collections',
+      //   collectionsArray.map(({ title, items }) => ({ title, items }))
+      // );
     });
   }
 
@@ -81,6 +89,7 @@ class App extends React.Component {
 
 const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser
+  //collectionsArray: selectCollectionsForPreview
 });
 
 // const mapStateToProps = state => ({

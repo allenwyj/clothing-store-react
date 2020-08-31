@@ -10,7 +10,8 @@ export const selectCollections = createSelector(
 
 export const selectCollectionsForPreview = createSelector(
   [selectCollections],
-  collections => Object.keys(collections).map(key => collections[key])
+  collections =>
+    collections ? Object.keys(collections).map(key => collections[key]) : []
 );
 
 // selectCollection is a currting function (a function returns another function)
@@ -20,8 +21,7 @@ export const selectCollectionsForPreview = createSelector(
 // memoize does memorise the the returned function( the selector ), if the
 // collectionUrlParam is the same, it won't return the function.
 export const selectCollection = memoize(collectionUrlParam =>
-  createSelector(
-    [selectCollections],
-    collections => collections[collectionUrlParam]
+  createSelector([selectCollections], collections =>
+    collections ? collections[collectionUrlParam] : null
   )
 );

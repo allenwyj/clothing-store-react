@@ -1,6 +1,11 @@
 import React from 'react';
 
-import './FormInput.scss';
+//import './FormInput.scss';
+import {
+  GroupContainer,
+  FormInputContainer,
+  FormInputLabel
+} from './FormInputStyles';
 
 /**
  * FormInput component handles the user input section in the form.
@@ -12,22 +17,18 @@ import './FormInput.scss';
  * So the input can be determined by name, type, value and required
  */
 const FormInput = ({ handleChange, label, ...otherProps }) => (
-  <div className="group">
-    <input className="form-input" onChange={handleChange} {...otherProps} />
+  <GroupContainer>
+    <FormInputContainer onChange={handleChange} {...otherProps} />
     {
       // If a label is passed in, then generates the label tag.
       // if user is typing something and the value is not empty, then add the shrink into the label class.
       label ? (
-        <label
-          className={`${
-            otherProps.value.length ? 'shrink' : ''
-          } form-input-label`}
-        >
+        <FormInputLabel className={otherProps.value.length ? 'shrink' : ''}>
           {label}
-        </label>
+        </FormInputLabel>
       ) : null
     }
-  </div>
+  </GroupContainer>
 );
 
 export default FormInput;

@@ -47,6 +47,51 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   return userRef;
 };
 
+// ONLY FOR DEVELOPMENT PURPOSE!!!
+// Adding documents into the collection in the firebase
+// collectionKey: the name of collection in the firebase
+export const addCollectionAndDocuments = async (
+  collectionKey,
+  objectsToAdd
+) => {
+  const collectionRef = firestore.collection(collectionKey);
+
+  // setting the batch  object and allow us to process all calls in one big calls.
+  const batch = firestore.batch();
+
+  objectsToAdd.forEach(obj => {
+    // creating a new document ref with empty string and generating an random document id
+    const newDocRef = collectionRef.doc();
+    batch.set(newDocRef, obj);
+  });
+
+  // batch.commit() is a promise function, and we want to reuse its return
+  return await batch.commit();
+};
+
+export const convertCollectionsSnapshotToMap = collections => {
+  // storing the collections data as an array from the firestore
+  const transformedCollection = collections.docs.map(doc => {
+    // destructuring the data from each document
+    const { title, items } = doc.data();
+
+    // having the similar data structure for the values in ShopData.js
+    return {
+      routeName: encodeURI(title.toLowerCase()), // encode the title
+      id: doc.id,
+      title,
+      items
+    };
+  });
+
+  // converting the array to the object that we used in redux
+  return transformedCollection.reduce((accumulator, collection) => {
+    // using the collection's title as the key, and storing the current collection as the value.
+    accumulator[collection.title.toLowerCase()] = collection;
+    return accumulator;
+  }, {});
+};
+
 // initialise Firebase
 firebase.initializeApp(firebaseConfig);
 
