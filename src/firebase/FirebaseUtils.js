@@ -28,6 +28,7 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
 
   // if the current login user is not in the firebase, we will handle the user creation.
   if (!snapShot.exists) {
+    // Creating a new user and saving it into the firebase
     const { displayName, email } = userAuth;
     const createAt = new Date();
 
@@ -47,7 +48,7 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   return userRef;
 };
 
-// ONLY FOR DEVELOPMENT PURPOSE!!!
+// TODO: ONLY FOR DEVELOPMENT PURPOSE!!!
 // Adding documents into the collection in the firebase
 // collectionKey: the name of collection in the firebase
 export const addCollectionAndDocuments = async (
@@ -102,11 +103,11 @@ export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 
 // create an instance of the Google provider object
-const provider = new firebase.auth.GoogleAuthProvider();
+export const googleProvider = new firebase.auth.GoogleAuthProvider();
 
 // always trigger the Google pop up
-provider.setCustomParameters({ prompt: ' select_account' });
+googleProvider.setCustomParameters({ prompt: ' select_account' });
 
-export const signInWithGoogle = () => auth.signInWithPopup(provider);
+export const signInWithGoogle = () => auth.signInWithPopup(googleProvider);
 
 export default firebase;
