@@ -4,9 +4,9 @@ import {
   convertCollectionsSnapshotToMap
 } from '../../firebase/FirebaseUtils';
 
-export const fetchCollectionsStart = collectionMap => ({
+export const fetchCollectionsStart = collectionsMap => ({
   type: ShopActionTypes.FETCH_COLLECTIONS_START,
-  payload: collectionMap
+  payload: collectionsMap
 });
 
 export const fetchCollectionsSuccess = collectionsMap => ({
@@ -19,6 +19,7 @@ export const fetchCollectionsFailed = errorMessage => ({
   payload: errorMessage
 });
 
+// Using for redux-thunk
 export const fetchCollectionsStartAsync = () => {
   return dispatch => {
     const collectionRef = firestore.collection('collections');
