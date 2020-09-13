@@ -12,9 +12,6 @@ import SignInAndSignUpPage from './pages/sign-in-and-sign-up/SignInAndSignUpPage
 
 import Header from './components/header/Header';
 
-//import { auth, createUserProfileDocument } from './firebase/FirebaseUtils';
-
-import { setCurrentUser } from './redux/user/UserAction';
 import { selectCurrentUser } from './redux/user/UserSelectors';
 
 class App extends React.Component {
@@ -23,7 +20,6 @@ class App extends React.Component {
   componentDidMount() {
     // getting dispatching actions object
     //const { setCurrentUser } = this.props;
-
     /* REFACTORING FOR USING redux-saga
     // an open connection which monitors if firebase authentication is changed.
     // if no current login user, userAuth is null.
@@ -90,17 +86,12 @@ class App extends React.Component {
 
 const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser
-  //collectionsArray: selectCollectionsForPreview
 });
-
-// const mapStateToProps = state => ({
-//   currentUser: state.user.currentUser
-// });
 
 // Dispatch accepts action objects and pass it to every reducer
-const mapDispatchToProps = dispatch => ({
-  // setCurrentUser() returns an Action object, each field is a function
-  setCurrentUser: user => dispatch(setCurrentUser(user))
-});
+// const mapDispatchToProps = dispatch => ({
+//   // setCurrentUser() returns an Action object, each field is a function
+//   setCurrentUser: user => dispatch(setCurrentUser(user))
+// });
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps)(App);
