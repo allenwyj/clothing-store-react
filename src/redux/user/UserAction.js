@@ -50,3 +50,7 @@ export const signUpFailed = error => ({
 export const checkUserSession = () => ({
   type: UserActionTypes.CHECK_USER_SESSION
 });
+
+export const fetchingStart = () => ({
+  type: UserActionTypes.FETCHING_START
+})

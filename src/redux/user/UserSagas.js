@@ -8,7 +8,8 @@ import {
   signOutSuccess,
   signOutFailed,
   signUpFailed,
-  signUpSuccess
+  signUpSuccess,
+  fetchingStart
 } from './UserAction';
 
 import {
@@ -35,6 +36,7 @@ export function* getSnapshotFromUserAuth(userAuth, additionalData) {
 
 export function* signInWithGoogle() {
   try {
+    yield put(fetchingStart());
     // We put this auth.signInWIthPopup() instead of doing this in FIrebaseUtils.js is because
     // we want to access the value that gets returned when the success happens with our signInWithPopup
     const { user } = yield auth.signInWithPopup(googleProvider);
@@ -47,6 +49,7 @@ export function* signInWithGoogle() {
 // This saga generator takes the action object which is being dispatched.
 export function* signInWithEmail({ payload: { email, password } }) {
   try {
+    yield put(fetchingStart());
     const { user } = yield auth.signInWithEmailAndPassword(email, password);
     yield getSnapshotFromUserAuth(user);
   } catch (error) {
@@ -56,6 +59,7 @@ export function* signInWithEmail({ payload: { email, password } }) {
 
 export function* isUserAuthenticated() {
   try {
+    yield put(fetchingStart());
     const userAuth = yield getCurrentUser();
     // If there is no user session, end this function
     if (!userAuth) return;
@@ -68,6 +72,7 @@ export function* isUserAuthenticated() {
 
 export function* signOut() {
   try {
+    yield put(fetchingStart());
     yield auth.signOut();
     yield put(signOutSuccess());
   } catch (error) {
@@ -79,6 +84,7 @@ export function* signUpWithUserProfile({
   payload: { email, password, displayName }
 }) {
   try {
+    yield put(fetchingStart());
     const { user } = yield auth.createUserWithEmailAndPassword(email, password);
     // PAssing user object and adding displayName field into the new object
     yield put(signUpSuccess({ user, additionalData: { displayName } }));

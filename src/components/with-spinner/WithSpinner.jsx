@@ -21,14 +21,4 @@ const WithSpinner = WrappedComponent => {
   return Spinner;
 };
 
-// const WithSpinner = WrappedComponent => ({ isLoading, ...otherProps }) => {
-//   return isLoading ? (
-//     <SpinnerOverlay>
-//       <SpinnerContainer />
-//     </SpinnerOverlay>
-//   ) : (
-//     <WrappedComponent {...otherProps} />
-//   );
-// };
-
 export default WithSpinner;
