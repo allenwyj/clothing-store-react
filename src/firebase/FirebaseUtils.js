@@ -15,6 +15,8 @@ const firebaseConfig = {
 };
 
 // userAuth and additionalData are the object type.
+// If the user is not in the firebase, it will create a new user document.
+// If the user is already in the firebase, it will simply return the user document.
 export const createUserProfileDocument = async (userAuth, additionalData) => {
   // no current login user, exit the func
   if (!userAuth) return;
@@ -91,6 +93,17 @@ export const convertCollectionsSnapshotToMap = collections => {
     accumulator[collection.title.toLowerCase()] = collection;
     return accumulator;
   }, {});
+};
+
+// This method is to handle fetching the current sign-in user status
+// It will use promise to get userAuth shortly from auth, then unsubscribe immediately.
+export const getCurrentUser = () => {
+  return new Promise((resolve, reject) => {
+    const unsubscribe = auth.onAuthStateChanged(userAuth => {
+      unsubscribe();
+      resolve(userAuth);
+    }, reject);
+  });
 };
 
 // initialise Firebase
