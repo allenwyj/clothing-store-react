@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -12,31 +12,25 @@ import { ShopPageContainer } from './ShopPageStyles';
 // because ShopPage component is being routed inside App component
 // so route will automatically pass some
 // props (history, location, match...) into ShopPage component
-class ShopPage extends React.Component {
-  componentDidMount() {
-    const { fetchCollectionsStart } = this.props;
-
+const ShopPage = ({ fetchCollectionsStart, match }) => {
+  useEffect(() => {
     fetchCollectionsStart();
-  }
+  }, [fetchCollectionsStart]);
 
-  render() {
-    const { match } = this.props;
-
-    return (
-      <ShopPageContainer>
-        <Route
-          exact
-          path={`${match.path}`}
-          component={CollectionOverviewContainer}
-        />
-        <Route
-          path={`${match.path}/:collectionId`}
-          component={CollectionPageContainer}
-        />
-      </ShopPageContainer>
-    );
-  }
-}
+  return (
+    <ShopPageContainer>
+      <Route
+        exact
+        path={`${match.path}`}
+        component={CollectionOverviewContainer}
+      />
+      <Route
+        path={`${match.path}/:collectionId`}
+        component={CollectionPageContainer}
+      />
+    </ShopPageContainer>
+  );
+};
 
 const mapDispatchToProps = dispatch => ({
   fetchCollectionsStart: () => dispatch(fetchCollectionsStart())

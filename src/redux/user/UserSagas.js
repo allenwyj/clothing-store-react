@@ -86,7 +86,9 @@ export function* signUpWithUserProfile({
   try {
     yield put(fetchingStart());
     const { user } = yield auth.createUserWithEmailAndPassword(email, password);
-    // PAssing user object and adding displayName field into the new object
+
+    // Passing user object and adding displayName field into the new object
+    // SIGN_UP_SUCCESS action is listened by saga but it won't change anything inside user reducer.
     yield put(signUpSuccess({ user, additionalData: { displayName } }));
   } catch (error) {
     yield put(signUpFailed(error));
@@ -94,6 +96,7 @@ export function* signUpWithUserProfile({
   }
 }
 
+// Running when the SIGN_UP_SUCCESS action is dispatched
 export function* signInAfterSignUpSuccess({
   payload: { user, additionalData }
 }) {
