@@ -1,4 +1,7 @@
+// adding the new item into the current cartItems array, if the item is existing, then increase the quantity by 1,
+// if the items is not existing, then create the new item and append the quantity to 1.
 export const addItemToCart = (cartItems, newItem) => {
+  // check if there is a matched cart item id
   const existingCartItem = cartItems.find(
     cartItem => cartItem.id === newItem.id
   );

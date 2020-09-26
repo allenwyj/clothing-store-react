@@ -14,7 +14,7 @@ export const selectCollectionsForPreview = createSelector(
     collections ? Object.keys(collections).map(key => collections[key]) : []
 );
 
-// selectCollection is a currting function (a function returns another function)
+// selectCollection is a currying function (a function returns another function)
 // The returned function will take the state to perform the transmission with other selectors.
 // collectionUrlParam will be the value passed into from the url
 //
