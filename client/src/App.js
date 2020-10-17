@@ -3,13 +3,12 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import './App.css';
+import { GlobalStyle } from './global.styles';
 
 import HomePage from './pages/homepage/HomePage';
 import ShopPage from './pages/shop/ShopPage';
 import CheckoutPage from './pages/checkout/CheckoutPage';
 import SignInAndSignUpPage from './pages/sign-in-and-sign-up/SignInAndSignUpPage';
-
 import Header from './components/header/Header';
 
 import { selectCurrentUser } from './redux/user/UserSelectors';
@@ -25,6 +24,7 @@ const App = ({ checkUserSession, currentUser }) => {
   // putting Header out of the Switch can make Header always is always presented and rendered.
   return (
     <div>
+      <GlobalStyle />
       <Header />
       <Switch>
         <Route exact path="/" component={HomePage} />
