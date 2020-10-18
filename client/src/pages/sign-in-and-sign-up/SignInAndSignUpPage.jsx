@@ -8,7 +8,7 @@ import WithSpinner from '../../components/with-spinner/WithSpinner';
 
 import { SignInAndSignUpContainer } from './SignInAndSignUpPageStyles';
 
-const SignInAndSignUpPage = ({ isLoading }) => (
+const SignInAndSignUpPage = () => (
   <SignInAndSignUpContainer>
     <SignIn />
     <SignUp />

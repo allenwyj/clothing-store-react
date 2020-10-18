@@ -9,7 +9,8 @@ import {
   signOutFailed,
   signUpFailed,
   signUpSuccess,
-  fetchingStart
+  fetchingStart,
+  fetchingStop
 } from './UserAction';
 
 import {
@@ -62,7 +63,10 @@ export function* isUserAuthenticated() {
     yield put(fetchingStart());
     const userAuth = yield getCurrentUser();
     // If there is no user session, end this function
-    if (!userAuth) return;
+    if (!userAuth) {
+      yield put(fetchingStop());
+      return;
+    }
 
     yield getSnapshotFromUserAuth(userAuth);
   } catch (error) {

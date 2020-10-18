@@ -54,3 +54,7 @@ export const checkUserSession = () => ({
 export const fetchingStart = () => ({
   type: UserActionTypes.FETCHING_START
 })
+
+export const fetchingStop = () => ({
+  type: UserActionTypes.FETCHING_STOP
+})

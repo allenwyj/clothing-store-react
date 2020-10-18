@@ -15,6 +15,11 @@ const userReducer = (state = INITIAL_STATE, action) => {
         ...state,
         isFetching: true
       }
+    case UserActionTypes.FETCHING_STOP:
+      return {
+        ...state,
+        isFetching: false
+      }
     case UserActionTypes.SIGN_IN_SUCCESS:
       // return a new object represents the newest state
       return {
