@@ -11,6 +11,7 @@ export const CheckoutItemContainer = styled.div`
 
   @media screen and (max-width: 800px) {
     font-size: 18px;
+    justify-content: space-around;
   }
 `;
 
@@ -28,7 +29,7 @@ export const TextContainer = styled.span`
   width: 23%;
 
   @media screen and (max-width: 800px) {
-    width: 22%;
+    width: 15%;
   }
 `;
 
