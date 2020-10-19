@@ -12,18 +12,25 @@ import {
 } from './CollectionPageStyles';
 
 const CollectionPage = ({ collection }) => {
-  const { title, items } = collection;
+  let container;
 
-  return (
-    <CollectionPageContainer>
-      <CollectionTitle>{title}</CollectionTitle>
-      <CollectionItemsContainer>
-        {items.map(item => (
-          <CollectionItem key={item.id} item={item} />
-        ))}
-      </CollectionItemsContainer>
-    </CollectionPageContainer>
-  );
+  if (collection) {
+    const { title, items } = collection;
+    container = (
+      <div>
+        <CollectionTitle>{title}</CollectionTitle>
+        <CollectionItemsContainer>
+          {items.map(item => (
+            <CollectionItem key={item.id} item={item} />
+          ))}
+        </CollectionItemsContainer>
+      </div>
+    );
+  } else {
+    container = <h2>Sorry, we can't find any product under your search. </h2>;
+  }
+
+  return <CollectionPageContainer>{container}</CollectionPageContainer>;
 };
 
 const mapStateToProps = (state, ownProps) => ({
