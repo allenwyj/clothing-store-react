@@ -40,6 +40,11 @@ export const OptionsContainer = styled.div`
 
 // reuse the same css code for different elements by using css from styled-components
 export const OptionLink = styled(Link)`
-  padding: 10px 15px;
+  // Should be margin, if it sets to padding, then users can click on the surrounding white space.
+  margin: 10px 15px;
   cursor: pointer;
+
+  @media screen and (max-width: 800px) {
+    margin: 10px 10px;
+  } ;
 `;
