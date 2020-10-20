@@ -7,6 +7,7 @@ import { GlobalStyle } from './global.styles';
 
 // import HomePage from './pages/homepage/HomePage';
 import Header from './components/header/Header';
+import Spinner from './components/spinner/spinner.component';
 
 import { selectCurrentUser } from './redux/user/UserSelectors';
 import { checkUserSession } from './redux/user/UserAction';
@@ -32,7 +33,7 @@ const App = ({ checkUserSession, currentUser }) => {
       <GlobalStyle />
       <Header />
       <Switch>
-        <Suspense fallback={<div> Loading Page... </div>}>
+        <Suspense fallback={<Spinner />}>
           <Route exact path="/" component={HomePage} />
           <Route path="/shop" component={ShopPage} />
           <Route exact path="/checkout" component={CheckoutPage} />
