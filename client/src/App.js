@@ -6,8 +6,8 @@ import { createStructuredSelector } from 'reselect';
 import { GlobalStyle } from './global.styles';
 
 // import HomePage from './pages/homepage/HomePage';
-import Header from './components/header/Header';
 import Spinner from './components/spinner/spinner.component';
+import Header from './components/header/Header';
 
 import { selectCurrentUser } from './redux/user/UserSelectors';
 import { checkUserSession } from './redux/user/UserAction';
