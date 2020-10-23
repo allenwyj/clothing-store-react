@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const path = require('path');
+const compression = require('compression');
 
 if (process.env.NODE_ENV !== 'production') require('dotenv').config();
 
@@ -11,6 +12,7 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const app = express();
 const port = process.env.PORT || 5000; // server port
 
+app.use(compression());
 // any incoming requests will be processed their body tag and convert it to JSON
 app.use(bodyParser.json());
 // ensure that the URL strings coming in or passing out will not contain any space or symbol
